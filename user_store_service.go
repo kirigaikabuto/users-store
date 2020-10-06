@@ -63,7 +63,7 @@ func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) (*MovieRecommendR
 	}
 	output := &MovieRecommendResponse{}
 	fmt.Println(string(body))
-	err = json.Unmarshal(body,output)
+	err = json.Unmarshal(body,&output)
 	if err != nil {
 		return nil, err
 	}
