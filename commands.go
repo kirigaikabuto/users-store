@@ -29,10 +29,6 @@ type MovieRecommend struct {
 	Score float64 `json:"score"`
 }
 
-type ResultRecommend struct {
-	movies []MovieRecommend
-}
-
 type MovieRecommendResponse struct {
-	Result ResultRecommend `json:"result"`
+	 Movies []MovieRecommend
 }
