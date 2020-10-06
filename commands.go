@@ -1,7 +1,7 @@
 package users_store
 
 type ListMoviesCommand struct {
-	Count int64 `json:"count"`
+	Count int64 `json:"count,omitempty"`
 }
 
 func(cmd *ListMoviesCommand) Exec(service UserService) (interface{},error) {
