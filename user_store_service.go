@@ -52,7 +52,7 @@ func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) (*movie_store.Mov
 	if err != nil {
 		return nil, err
 	}
-	resp , err := http.Post("","application/json", bytes.NewBuffer(requestBody))
+	resp , err := http.Post("http://127.0.0.1:5000/api/v1/recommend/","application/json", bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, err
 	}
