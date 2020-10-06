@@ -12,7 +12,7 @@ import (
 type UserService interface {
 	ListMovies(cmd *ListMoviesCommand) ([]movie_store.Movie, error)
 	GetMovieByName(cmd *GetMovieByNameCommand) (*movie_store.Movie,error)
-	GetMovieById(cmd *GetMovieByIdCommand) (*MovieRecommendResponse, error)
+	GetMovieById(cmd *GetMovieByIdCommand) ([]movie_store.Movie, error)
 }
 
 type userService struct {
@@ -41,7 +41,7 @@ func (svc *userService) GetMovieByName(cmd *GetMovieByNameCommand) (*movie_store
 	return movie, nil
 }
 
-func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) (*MovieRecommendResponse, error){
+func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) ([]movie_store.Movie, error){
 	movie, err := svc.amqpRequests.GetMovieById(cmd)
 	if err != nil{
 		return nil, err
@@ -67,6 +67,16 @@ func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) (*MovieRecommendR
 	if err != nil {
 		return nil, err
 	}
-	return output, nil
+	var movies []movie_store.Movie
+	for _, v := range output.Movies {
+		newMovie, err := svc.amqpRequests.GetMovieByName(&GetMovieByNameCommand{
+			v.Name,
+		})
+		if err != nil {
+			return nil, err
+		}
+		movies = append(movies, *newMovie)
+	}
+	return movies, nil
 }
 
