@@ -5,5 +5,5 @@ type ListMoviesCommand struct {
 }
 
 func(cmd *ListMoviesCommand) Exec(service UserService) (interface{},error) {
-	return
+	return service.ListMovies(cmd)
 }
