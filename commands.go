@@ -15,3 +15,11 @@ type GetMovieByNameCommand struct {
 func(cmd *GetMovieByNameCommand) Exec(service UserService) (interface{},error) {
 	return service.GetMovieByName(cmd)
 }
+
+type GetMovieByIdCommand struct {
+	Id int64 `json:"id"`
+}
+
+func(cmd *GetMovieByIdCommand) Exec(service UserService) (interface{},error) {
+	return service.GetMovieById(cmd)
+}
