@@ -24,6 +24,11 @@ func NewHttpEndpoints(userService UserService) HttpEndpointsFactory {
 
 func (httpFac *httpEndpointsFactory) ListMoviesEndpoint() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", allowedHeaders)
+		w.Header().Set("Access-Control-Expose-Headers", "Authorization")
 		listMovieReq := &ListMoviesCommand{}
 		if r.Header.Get("Content-Type") == "application/json" {
 			err := json.NewDecoder(r.Body).Decode(listMovieReq)
