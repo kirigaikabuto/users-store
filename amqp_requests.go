@@ -16,7 +16,7 @@ func NewAmqpRequests(clt amqp.Client) *AmqpRequests{
 }
 
 func (r *AmqpRequests) GetListMovies(cmd *ListMoviesCommand) ([]movie_store.Movie,error){
-	response, err := r.call("movie.get",cmd)
+	response, err := r.call("movie.list",cmd)
 	if err != nil{
 		return nil, err
 	}
