@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"github.com/gorilla/mux"
 )
 
 type HttpEndpointsFactory interface {
 	ListMoviesEndpoint() func(w http.ResponseWriter, r *http.Request)
+	GetMovieByNameEndpoint(nameParam string) func(w http.ResponseWriter, r *http.Request)
 }
 
 type httpEndpointsFactory struct {
@@ -52,7 +54,7 @@ func (httpFac *httpEndpointsFactory) ListMoviesEndpoint() func(w http.ResponseWr
 	}
 }
 
-func (httpFac *httpEndpointsFactory) GetMovieByNameEndpoint() func(w http.ResponseWriter, r *http.Request) {
+func (httpFac *httpEndpointsFactory) GetMovieByNameEndpoint(nameParam string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
 		w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -60,6 +62,13 @@ func (httpFac *httpEndpointsFactory) GetMovieByNameEndpoint() func(w http.Respon
 		w.Header().Set("Access-Control-Allow-Headers", allowedHeaders)
 		w.Header().Set("Access-Control-Expose-Headers", "Authorization")
 		movieReq := &GetMovieByNameCommand{}
+		vars := mux.Vars(r)
+		name, ok := vars[nameParam]
+		if !ok {
+			respondJSON(w, http.StatusInternalServerError, &customError{"no token param"})
+			return
+		}
+		movieReq.Name = name
 		if r.Header.Get("Content-Type") == "application/json" {
 			err := json.NewDecoder(r.Body).Decode(movieReq)
 			if err != nil {

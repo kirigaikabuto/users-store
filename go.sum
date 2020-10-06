@@ -1,6 +1,8 @@
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/djumanoff/amqp v1.0.5 h1:U/smgzHKiZQWzyFOm3RWfUctC31XA2gmUTFvcB4SDOc=
 github.com/djumanoff/amqp v1.0.5/go.mod h1:iMGsrDyTlB0+Wx2WQQPo2eqyKMHWdv/XsLyv780DUe8=
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/kirigaikabuto/movie-store v1.0.5 h1:D5KfCV038pwT34jQlXvnKpLHmLZmjrJKKI3TdeEuv70=
 github.com/kirigaikabuto/movie-store v1.0.5/go.mod h1:3nOqrbruJM+gkCmv4XfN0Jnr3TQPk51NN7I2avzpzPM=
 github.com/konsorten/go-windows-terminal-sequences v0.0.0-20180402223658-b729f2633dfe/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
