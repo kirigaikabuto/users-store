@@ -1,7 +1,12 @@
 package users_store
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	movie_store "github.com/kirigaikabuto/movie-store"
+	"io/ioutil"
+	"net/http"
 )
 
 type UserService interface {
@@ -41,6 +46,22 @@ func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) (*movie_store.Mov
 	if err != nil{
 		return nil, err
 	}
+	requestBody ,err := json.Marshal(map[string]string{
+		"title":movie.Name,
+	})
+	if err != nil {
+		return nil, err
+	}
+	resp , err := http.Post("","application/json", bytes.NewBuffer(requestBody))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(string(body))
 	return movie, nil
 }
 
