@@ -28,6 +28,19 @@ func (r *AmqpRequests) GetListMovies(cmd *ListMoviesCommand) ([]movie_store.Movi
 	return movies,nil
 }
 
+func (r *AmqpRequests) GetMovieByName(cmd *GetMovieByNameCommand) (*movie_store.Movie,error){
+	response, err := r.call("movie.getByName",cmd)
+	if err != nil{
+		return nil, err
+	}
+	var movie *movie_store.Movie
+	err = json.Unmarshal(response.Body, &movie)
+	if err != nil {
+		return nil, err
+	}
+	return movie,nil
+}
+
 func (r *AmqpRequests) call(path string, data interface{}) (*amqp.Message,error){
 	jsonData, err := json.Marshal(data)
 	if err != nil {

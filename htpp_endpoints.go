@@ -52,6 +52,31 @@ func (httpFac *httpEndpointsFactory) ListMoviesEndpoint() func(w http.ResponseWr
 	}
 }
 
+func (httpFac *httpEndpointsFactory) GetMovieByNameEndpoint() func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", allowedHeaders)
+		w.Header().Set("Access-Control-Expose-Headers", "Authorization")
+		movieReq := &GetMovieByNameCommand{}
+		if r.Header.Get("Content-Type") == "application/json" {
+			err := json.NewDecoder(r.Body).Decode(movieReq)
+			if err != nil {
+				respondJSON(w, http.StatusInternalServerError, &customError{err.Error()})
+				return
+			}
+		}
+		data, err := movieReq.Exec(httpFac.userService)
+		if err != nil {
+			respondJSON(w, http.StatusInternalServerError, &customError{err.Error()})
+			return
+		}
+		respondJSON(w, http.StatusCreated, data)
+	}
+}
+
+
 func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {
