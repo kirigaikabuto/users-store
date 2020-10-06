@@ -23,3 +23,16 @@ type GetMovieByIdCommand struct {
 func(cmd *GetMovieByIdCommand) Exec(service UserService) (interface{},error) {
 	return service.GetMovieById(cmd)
 }
+
+type MovieRecommend struct {
+	Name string `json:"name"`
+	Score float64 `json:"score"`
+}
+
+type ResultRecommend struct {
+	movies []MovieRecommend
+}
+
+type MovieRecommendResponse struct {
+	Result ResultRecommend `json:"result"`
+}
