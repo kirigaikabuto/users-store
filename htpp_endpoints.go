@@ -3,6 +3,7 @@ package users_store
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 type HttpEndpointsFactory interface {
@@ -31,6 +32,12 @@ func (httpFac *httpEndpointsFactory) ListMoviesEndpoint() func(w http.ResponseWr
 				return
 			}
 		}
+		count, err := strconv.ParseInt(r.URL.Query().Get("count"),10,64)
+		if err != nil {
+			respondJSON(w, http.StatusInternalServerError, &customError{err.Error()})
+			return
+		}
+		listMovieReq.Count = count
 		data, err := listMovieReq.Exec(httpFac.userService)
 		if err != nil {
 			respondJSON(w, http.StatusInternalServerError, &customError{err.Error()})
