@@ -9,7 +9,7 @@ import (
 
 type HttpEndpointsFactory interface {
 	ListMoviesEndpoint() func(w http.ResponseWriter, r *http.Request)
-	GetMovieByNameEndpoint(idParam string) func(w http.ResponseWriter, r *http.Request)
+	GetMovieByIdEndpoint(idParam string) func(w http.ResponseWriter, r *http.Request)
 }
 
 type httpEndpointsFactory struct {
@@ -86,7 +86,7 @@ func (httpFac *httpEndpointsFactory) ListMoviesEndpoint() func(w http.ResponseWr
 //}
 
 
-func (httpFac *httpEndpointsFactory) GetMovieByNameEndpoint(idParam string) func(w http.ResponseWriter, r *http.Request) {
+func (httpFac *httpEndpointsFactory) GetMovieByIdEndpoint(idParam string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
 		w.Header().Set("Access-Control-Allow-Origin", "*")
