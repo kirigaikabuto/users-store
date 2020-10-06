@@ -75,6 +75,7 @@ func (svc *userService) GetMovieById(cmd *GetMovieByIdCommand) ([]movie_store.Mo
 		if err != nil {
 			return nil, err
 		}
+		newMovie.Score = v.Score
 		movies = append(movies, *newMovie)
 	}
 	return movies, nil
