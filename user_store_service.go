@@ -38,6 +38,8 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 		return nil, errors.New("full name should be included")
 	} else if cmd.Password == "" {
 		return nil, errors.New("password should be included")
+	} else if cmd.Username == "" {
+		return nil, errors.New("username should be included")
 	}
 	user := &User{}
 	if cmd.Email != "" && cmd.PhoneNumber != "" {
