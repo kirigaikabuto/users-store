@@ -9,6 +9,10 @@ type AMQPEndpointFactory struct {
 	userService UserService
 }
 
+type ErrorSt struct {
+	Text string `json:"text"`
+}
+
 func NewAMQPEndpointFactory(userService UserService) *AMQPEndpointFactory {
 	return &AMQPEndpointFactory{userService: userService}
 }
@@ -16,7 +20,9 @@ func (fac *AMQPEndpointFactory) CreateUserAmqpEndpoint() amqp.Handler {
 	return func(message amqp.Message) *amqp.Message {
 		cmd := &CreateUserCommand{}
 		if err := json.Unmarshal(message.Body, cmd); err != nil {
-			return AMQPError(err)
+			return AMQPError(&ErrorSt{
+				err.Error(),
+			})
 		}
 		resp, err := cmd.Exec(fac.userService)
 		if err != nil {
