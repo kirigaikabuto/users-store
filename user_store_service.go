@@ -47,5 +47,9 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	}
 	user.Password = string(hash)
 	user.RegisterDate = time.Now()
-	return user, nil
+	newUser, err := svc.userStore.Create(user)
+	if err != nil {
+		return nil, err
+	}
+	return newUser, nil
 }
