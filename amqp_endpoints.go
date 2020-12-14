@@ -26,7 +26,9 @@ func (fac *AMQPEndpointFactory) CreateUserAmqpEndpoint() amqp.Handler {
 		}
 		resp, err := cmd.Exec(fac.userService)
 		if err != nil {
-			return AMQPError(err)
+			return AMQPError(&ErrorSt{
+				err.Error(),
+			})
 		}
 		return OK(resp)
 	}
