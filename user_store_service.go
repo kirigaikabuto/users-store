@@ -11,13 +11,11 @@ type UserService interface {
 }
 
 type userService struct {
-	amqpRequests AmqpRequests
-	userStore    UserStore
+	userStore UserStore
 }
 
-func NewUserService(amqpReq AmqpRequests, userStore UserStore) UserService {
+func NewUserService(userStore UserStore) UserService {
 	return &userService{
-		amqpReq,
 		userStore,
 	}
 }
@@ -51,4 +49,3 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	user.RegisterDate = time.Now()
 	return user, nil
 }
-
