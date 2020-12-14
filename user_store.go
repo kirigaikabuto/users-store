@@ -4,4 +4,5 @@ type UserStore interface {
 	Get(id string) (*User, error)
 	Create(user *User) (*User, error)
 	Delete(id string) error
+	GetByEmail(email string) (*User, error)
 }
