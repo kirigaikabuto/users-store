@@ -60,7 +60,7 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 		return nil, errors.New("user with that username already exist")
 	}
 	if user.Email != "" {
-		existingUser, err = svc.userStore.GetByEmail(user.Username)
+		existingUser, err = svc.userStore.GetByEmail(user.Email)
 		if err != nil {
 			if err.Error() != "no user by this email" {
 				return nil, err
@@ -71,7 +71,7 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 		}
 	}
 	if user.PhoneNumber != "" {
-		existingUser, err = svc.userStore.GetByPhone(user.Username)
+		existingUser, err = svc.userStore.GetByPhone(user.PhoneNumber)
 		if err != nil {
 			if err.Error() != "no user by this phone" {
 				return nil, err
