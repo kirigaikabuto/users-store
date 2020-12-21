@@ -11,3 +11,11 @@ type CreateUserCommand struct {
 func (cmd *CreateUserCommand) Exec(service UserService) (interface{}, error) {
 	return service.CreateUser(cmd)
 }
+
+type GetUserByUsername struct {
+	Username string `json:"username"`
+}
+
+func (cmd *GetUserByUsername) Exec(service UserService) (interface{}, error) {
+	return service.GetUserByUsername(cmd)
+}

@@ -2,6 +2,7 @@ package users_store
 
 import (
 	"context"
+	"errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -55,6 +56,19 @@ func (us *userStore) GetByPhone(phone string) (*User, error) {
 	user := &User{}
 	err := collection.FindOne(context.TODO(), filter).Decode(&user)
 	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (us *userStore) GetByUsername(username string) (*User, error) {
+	filter := bson.D{{"username", username}}
+	user := &User{}
+	err := collection.FindOne(context.TODO(), filter).Decode(&user)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, errors.New("no user by this username")
+		}
 		return nil, err
 	}
 	return user, nil

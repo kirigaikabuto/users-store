@@ -34,6 +34,24 @@ func (fac *AMQPEndpointFactory) CreateUserAmqpEndpoint() amqp.Handler {
 	}
 }
 
+func (fac *AMQPEndpointFactory) GetUserByUsernameAmqpEndpoint() amqp.Handler {
+	return func(message amqp.Message) *amqp.Message {
+		cmd := &GetUserByUsername{}
+		if err := json.Unmarshal(message.Body, cmd); err != nil {
+			return AMQPError(&ErrorSt{
+				err.Error(),
+			})
+		}
+		resp, err := cmd.Exec(fac.userService)
+		if err != nil {
+			return AMQPError(&ErrorSt{
+				err.Error(),
+			})
+		}
+		return OK(resp)
+	}
+}
+
 func OK(d interface{}) *amqp.Message {
 	data, _ := json.Marshal(d)
 	return &amqp.Message{Body: data}

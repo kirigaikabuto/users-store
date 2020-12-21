@@ -11,6 +11,7 @@ import (
 
 type UserService interface {
 	CreateUser(cmd *CreateUserCommand) (*User, error)
+	GetUserByUsername(cmd *GetUserByUsername) (*User, error)
 }
 
 type userService struct {
@@ -63,4 +64,15 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 		return nil, err
 	}
 	return newUser, nil
+}
+
+func (svc *userService) GetUserByUsername(cmd *GetUserByUsername) (*User, error) {
+	if cmd.Username == "" {
+		return nil, errors.New("please enter the username")
+	}
+	user, err := svc.userStore.GetByUsername(cmd.Username)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }

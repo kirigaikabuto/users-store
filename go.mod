@@ -4,8 +4,8 @@ go 1.13
 
 require (
 	github.com/djumanoff/amqp v1.0.6
-	github.com/google/uuid v1.1.2 // indirect
-	github.com/kirigaikabuto/common-lib v1.0.0 // indirect
+	github.com/google/uuid v1.1.2
+	github.com/kirigaikabuto/common-lib v1.0.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/sirupsen/logrus v1.7.0 // indirect
 	github.com/streadway/amqp v1.0.0 // indirect
