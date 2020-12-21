@@ -47,7 +47,6 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	} else if cmd.PhoneNumber != "" {
 		user.RegisterType = cmn_lib.Phone
 	}
-	fmt.Println(user)
 	user.FullName = cmd.FullName
 	user.Username = cmd.Username
 	hash, err := bcrypt.GenerateFromPassword([]byte(cmd.Password), 5)
@@ -59,6 +58,7 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	uuId := uuid.New()
 	user.Id = uuId.String()
 	newUser, err := svc.userStore.Create(user)
+	fmt.Println(newUser)
 	if err != nil {
 		return nil, err
 	}
