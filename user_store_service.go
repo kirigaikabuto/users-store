@@ -2,6 +2,8 @@ package users_store
 
 import (
 	"errors"
+	"github.com/google/uuid"
+	cmn_lib "github.com/kirigaikabuto/common-lib"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
@@ -39,6 +41,11 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	} else if cmd.PhoneNumber != "" {
 		user.PhoneNumber = cmd.PhoneNumber
 	}
+	if cmd.Email != "" {
+		user.RegisterType = cmn_lib.Email
+	} else if cmd.PhoneNumber != "" {
+		user.RegisterType = cmn_lib.Phone
+	}
 	user.FullName = cmd.FullName
 	user.Username = cmd.Username
 	hash, err := bcrypt.GenerateFromPassword([]byte(cmd.Password), 5)
@@ -47,6 +54,8 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	}
 	user.Password = string(hash)
 	user.RegisterDate = time.Now()
+	uuId := uuid.New()
+	user.Id = uuId.String()
 	newUser, err := svc.userStore.Create(user)
 	if err != nil {
 		return nil, err
