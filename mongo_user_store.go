@@ -46,6 +46,10 @@ func (us *userStore) GetByEmail(email string) (*User, error) {
 	user := &User{}
 	err := collection.FindOne(context.TODO(), filter).Decode(&user)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, errors.New("no user by this email")
+		}
+		return nil, err
 		return nil, err
 	}
 	return user, nil
@@ -56,6 +60,10 @@ func (us *userStore) GetByPhone(phone string) (*User, error) {
 	user := &User{}
 	err := collection.FindOne(context.TODO(), filter).Decode(&user)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, errors.New("no user by this phone")
+		}
+		return nil, err
 		return nil, err
 	}
 	return user, nil

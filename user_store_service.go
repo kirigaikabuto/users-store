@@ -50,6 +50,38 @@ func (svc *userService) CreateUser(cmd *CreateUserCommand) (*User, error) {
 	}
 	user.FullName = cmd.FullName
 	user.Username = cmd.Username
+	existingUser, err := svc.userStore.GetByUsername(user.Username)
+	if err != nil {
+		if err.Error() != "no user by this username" {
+			return nil, err
+		}
+	}
+	if existingUser != nil {
+		return nil, errors.New("user with that username already exist")
+	}
+	if user.Email != "" {
+		existingUser, err = svc.userStore.GetByEmail(user.Username)
+		if err != nil {
+			if err.Error() != "no user by this email" {
+				return nil, err
+			}
+		}
+		if existingUser != nil {
+			return nil, errors.New("user with that email already exist")
+		}
+	}
+	if user.PhoneNumber != "" {
+		existingUser, err = svc.userStore.GetByPhone(user.Username)
+		if err != nil {
+			if err.Error() != "no user by this phone" {
+				return nil, err
+			}
+		}
+		if existingUser != nil {
+			return nil, errors.New("user with that phone already exist")
+		}
+	}
+
 	hash, err := bcrypt.GenerateFromPassword([]byte(cmd.Password), 5)
 	if err != nil {
 		return nil, err
