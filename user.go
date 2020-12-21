@@ -1,15 +1,19 @@
 package users_store
 
-import "time"
+import (
+	cmn_lib "github.com/kirigaikabuto/common-lib"
+	"time"
+)
 
 type User struct {
-	Id           string    `json:"id"`
-	Username     string    `json:"username"`
-	Password     string    `json:"password"`
-	FullName     string    `json:"full_name"`
-	PhoneNumber  string    `json:"phone_number"`
-	Email        string    `json:"email"`
-	RegisterDate time.Time `json:"register_date"`
+	Id           string               `json:"id"`
+	Username     string               `json:"username"`
+	Password     string               `json:"password"`
+	FullName     string               `json:"full_name"`
+	PhoneNumber  string               `json:"phone_number"`
+	Email        string               `json:"email"`
+	RegisterType cmn_lib.RegisterType `json:"register_type"`
+	RegisterDate time.Time            `json:"register_date"`
 }
 
 type UserUpdate struct {
@@ -20,4 +24,3 @@ type UserUpdate struct {
 	PhoneNumber *string `json:"phone_number"`
 	Email       *string `json:"email"`
 }
-

@@ -46,6 +46,8 @@ github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfC
 github.com/joho/godotenv v1.3.0/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
 github.com/karrick/godirwalk v1.8.0/go.mod h1:H5KPZjojv4lE+QYImBI8xVtrBRgYrIVsaRPx4tDPEn4=
 github.com/karrick/godirwalk v1.10.3/go.mod h1:RoGL9dQei4vP9ilrpETWE8CLOZ1kiN0LhBygSwrAsHA=
+github.com/kirigaikabuto/common-lib v1.0.0 h1:Od6TNv3yHqPfZGZARXXtKrAAD0ncG5y0dUwbydQpf1E=
+github.com/kirigaikabuto/common-lib v1.0.0/go.mod h1:DrEB1Uxxv3kAw6BCrro9LhbyTSEN8qfzx72t5/tvT9E=
 github.com/kirigaikabuto/movie-store v1.0.5 h1:D5KfCV038pwT34jQlXvnKpLHmLZmjrJKKI3TdeEuv70=
 github.com/kirigaikabuto/movie-store v1.0.5/go.mod h1:3nOqrbruJM+gkCmv4XfN0Jnr3TQPk51NN7I2avzpzPM=
 github.com/kirigaikabuto/movie-store v1.0.6-0.20201210104938-56243ef8ebfe h1:b7tR8bKnqZBWmVXvUPURdjO0Gb/C+A+4NmVf5MGs1Pw=
