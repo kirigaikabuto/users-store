@@ -50,6 +50,16 @@ func (us *userStore) GetByEmail(email string) (*User, error) {
 	return user, nil
 }
 
+func (us *userStore) GetByPhone(phone string) (*User, error) {
+	filter := bson.D{{"phone", phone}}
+	user := &User{}
+	err := collection.FindOne(context.TODO(), filter).Decode(&user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 func (us *userStore) Create(user *User) (*User, error) {
 	_, err := collection.InsertOne(context.TODO(), user)
 	if err != nil {
